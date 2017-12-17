@@ -22,7 +22,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Docusign Oauth documentation: https://docs.docusign.com/esign/guide/authentication/oa2_auth_code.html
+
+For a Rails application you'd now create an initializer config/initializers/omniauth.rb:
+```ruby
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :docusign, 'docusign_integrator_key', 'docusign_secret_key', :site => 'https://account.docusign.com' 
+end
+# site defaults to: 'https://account.docusign.com', 
+# for development or testing you can also use the demo site provided by docusign 'https://account-d.docusign.com'
+```
+
+After authentication success user will be redirected to the callback url with all the oauth and user information.
+Default callback path is: `/auth/docusign/callback`
+
+Docsign support token refresh feature. Example code.
+```ruby
+strategy = OmniAuth::Strategies::Docusign.new(
+      nil,
+      docusign_integrator_key,
+      docusign_secret_key,
+    )
+new_token = strategy.refresh_token(
+            current_docusign_token, docusign_refresh_token
+          )    
+```  
 
 ## Development
 
