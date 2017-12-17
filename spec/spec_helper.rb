@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "omniauth/docusign"
+require "omniauth/strategies/docusign"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
